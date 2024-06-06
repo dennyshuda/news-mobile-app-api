@@ -80,7 +80,6 @@ export const refreshSession = async (req: Request, res: Response) => {
 			statusCode: 200,
 			message: "Success to generate access token",
 			accessToken: token,
-			...userInfo,
 		});
 	} catch (error) {
 		return res
