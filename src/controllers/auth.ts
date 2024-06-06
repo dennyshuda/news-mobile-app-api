@@ -24,11 +24,11 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-	const { username, password } = req.body;
+	const { email, password } = req.body;
 
 	try {
 		const user = await prisma.user.findUnique({
-			where: { username },
+			where: { email },
 		});
 
 		if (!user) return res.status(401).json({ message: "Invalid user" });
