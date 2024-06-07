@@ -10,11 +10,11 @@ export const getPost = async (req: Request, res: Response) => {
 				},
 			},
 		});
-		res
+		return res
 			.status(200)
 			.json({ status: true, statusCode: 200, message: "successfully to get post", posts: post });
 	} catch (error) {
-		res
+		return res
 			.status(500)
 			.json({ status: false, statusCode: 500, message: "Something wrong when get post" });
 	}
@@ -24,20 +24,45 @@ export const getPostById = async (req: Request, res: Response) => {
 	const id = req.params.id;
 
 	try {
-		const post = await prisma.post.findFirst({ where: { id: id }, include: { user: true } });
-		res.status(200).json(post);
+		const post = await prisma.post.findFirst({
+			where: { id: id },
+			include: { user: { select: { id: true, email: true, role: true, username: true } } },
+		});
+		return res.status(200).json({
+			status: true,
+			statusCode: 200,
+			message: "successfully to get post by id",
+			post: post,
+		});
 	} catch (error) {
-		res.status(400).json({ message: "error" });
+		return res
+			.status(500)
+			.json({ status: false, statusCode: 500, message: "Something wrong when get post by id" });
 	}
 };
 
 export const createPost = async (req: Request, res: Response) => {
-	console.log(req.body);
+	const { image, title, content, category, userId } = req.body;
 
 	try {
-		const post = await prisma.post.create({ data: req.body });
-		res.status(200).json(post);
+		const post = await prisma.post.create({
+			data: {
+				image: image,
+				title: title,
+				content: content,
+				category: category,
+				userId: userId,
+			},
+		});
+		return res.status(200).json({
+			status: true,
+			statusCode: 200,
+			message: "successfully create post",
+			post: post,
+		});
 	} catch (error) {
-		res.status(400).json({ message: "error" });
+		return res
+			.status(500)
+			.json({ status: false, statusCode: 500, message: "Something wrong when create post" });
 	}
 };
