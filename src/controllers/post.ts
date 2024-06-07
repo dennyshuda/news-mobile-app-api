@@ -42,7 +42,7 @@ export const getPostById = async (req: Request, res: Response) => {
 };
 
 export const createPost = async (req: Request, res: Response) => {
-	const { image, title, content, category, userId } = req.body;
+	const { image, title, content, categoryId, userId } = req.body;
 
 	try {
 		const post = await prisma.post.create({
@@ -50,7 +50,7 @@ export const createPost = async (req: Request, res: Response) => {
 				image: image,
 				title: title,
 				content: content,
-				category: category,
+				categoryId: categoryId,
 				userId: userId,
 			},
 		});
