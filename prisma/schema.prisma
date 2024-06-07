@@ -12,20 +12,20 @@ model User {
   email    String @unique
   username String @unique
   password String
-  role     Role   @default(READER)
-  Post     Post[]
+  role     Role
+  posts    Post[]
 }
 
 model Post {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  image     String
+  image     String?
   content   String
   title     String
   user      User     @relation(fields: [userId], references: [id])
   userId    String
-  category  String
+  category  String?
 }
 
 enum Role {
