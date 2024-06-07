@@ -4,6 +4,6 @@ import { verifyToken } from "../middleware/verifyToken";
 
 export const PostRouter = express.Router();
 
-PostRouter.get("/", getPost);
+PostRouter.get("/", verifyToken, getPost);
 PostRouter.get("/:id", getPostById);
 PostRouter.post("/", createPost);
