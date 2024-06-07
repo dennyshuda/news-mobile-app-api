@@ -4,7 +4,7 @@ import prisma from "../lib/prisma";
 import { signJWT, verifyJWT } from "../utils/jwt";
 
 export const register = async (req: Request, res: Response) => {
-	const { username, email, password } = req.body;
+	const { username, email, password, role } = req.body;
 
 	if (username === "" || email === "" || password === "")
 		return res.status(400).json({ status: false, statusCode: 400, message: "Check your data" });
@@ -16,6 +16,7 @@ export const register = async (req: Request, res: Response) => {
 			data: {
 				username,
 				email,
+				role,
 				password: hashedPassword,
 			},
 		});
