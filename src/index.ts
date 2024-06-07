@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
-	res.status(200).send("This root api");
+	res.status(200).json({ message: "This is root api News Mobile App" });
 });
 
 routes(app);
