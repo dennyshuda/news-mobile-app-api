@@ -8,6 +8,7 @@ export const getPost = async (req: Request, res: Response) => {
 				user: {
 					select: { id: true, email: true, role: true, username: true },
 				},
+				category: true,
 			},
 		});
 		return res
