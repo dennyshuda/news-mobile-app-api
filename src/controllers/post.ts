@@ -66,3 +66,27 @@ export const createPost = async (req: Request, res: Response) => {
 			.json({ status: false, statusCode: 500, message: "Something wrong when create post" });
 	}
 };
+
+export const searchPost = async (req: Request, res: Response) => {
+	const { query } = req.body;
+
+	try {
+		const posts = await prisma.post.findMany({
+			where: { title: { contains: query, mode: "insensitive" } },
+		});
+
+		if (posts.length === 0)
+			return res.status(500).json({ status: false, statusCode: 500, message: "Not found" });
+
+		return res.status(200).json({
+			status: true,
+			statusCode: 200,
+			message: "successfully get post",
+			posts: posts,
+		});
+	} catch (error) {
+		return res
+			.status(500)
+			.json({ status: false, statusCode: 500, message: "Something wrong when search post" });
+	}
+};
